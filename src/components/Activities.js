@@ -4,17 +4,19 @@ import { getActivities } from '../api'
 const Activities = () => {
     const [activities, setActivities] = useState([]);
 
-    useEffect(async () =>{
-        const activities = await getActivities();
-        setActivities(activities)
+    useEffect(() =>{
+        const fetchData = async () => {
+          const activities = await getActivities()  
+            setActivities(activities)
+        }
+            fetchData();
     }, []);
     return(
 
     <div> {activities.map(activity => 
-        <div>
-            <h2> {activity.id}</h2>
-            <h3> {activity.name} </h3>
-            <p> {activity.description}</p>
+        <div key = {activity.id}>
+            <h3 > {activity.name} </h3>
+            <p  > {activity.description}</p>
         </div>
         )} 
         
