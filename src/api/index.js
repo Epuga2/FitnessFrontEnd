@@ -18,7 +18,7 @@ const baseURL = 'https://fitnesstrac-kr.herokuapp.com/api/';
 //     };
 // };
 
-export const routines = async (user) => {
+export const getRoutines = async (user) => {
     const url = `${baseURL}/routines`;
     try{
         const response = await fetch (url, {
