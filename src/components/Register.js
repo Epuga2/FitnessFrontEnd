@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { loginUser } from '../api'
+import { registerUser } from '../api';
 
-const Login = () => {
+const Register = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
@@ -11,9 +11,9 @@ const Login = () => {
             username: userName,
             password: password
         };
-            
-        await loginUser(user);
-        console.log(localStorage.getItem('token'));
+        console.log(user)
+        await registerUser(user);
+        //console.log(localStorage.getItem(token));
         setUserName('');
         setPassword('');
     };
@@ -28,8 +28,8 @@ const Login = () => {
     return (
         <div>
             <form onSubmit ={ handleSubmit }>
-                <input type = 'text' placeholder = "Username" value = {userName} onChange = {updateUserName} />
-                <input type = 'text' placeholder = "Password" value = {password} onChange = {updatePassword} />
+                <input type = 'text' placeholder = "Register Username" value = {userName} onChange = {updateUserName} />
+                <input type = 'text' placeholder = "Register Password" value = {password} onChange = {updatePassword} />
                 <button> Login </button>
             </form>
         </div>
@@ -37,4 +37,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
