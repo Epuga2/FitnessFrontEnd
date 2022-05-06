@@ -63,3 +63,19 @@ export const getActivities = async () => {
         console.error(error);
     }
 };
+
+export const getRoutines = async (user) => {
+    const url = `${baseURL}/routines`;
+    try{
+        const response = await fetch (url, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = await response.json()
+        return json;
+    } catch(error){
+        console.error(error);
+    }
+}

@@ -13,10 +13,11 @@ const Activities = () => {
     }, []);
     return(
 
-    <div> {activities.map(activity => 
+    <div> 
+        {activities.map(activity => 
         <div key = {activity.id}>
-            <h3 > {activity.name} </h3>
-            <p  > {activity.description}</p>
+            <h3> {activity.name} </h3>
+            <p> {activity.description} </p>
         </div>
         )} 
         
