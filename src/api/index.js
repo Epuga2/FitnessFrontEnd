@@ -79,3 +79,35 @@ export const getRoutines = async (user) => {
         console.error(error);
     }
 }
+
+export const getCurrentUser = async () => {
+    const url = `${baseURL}/users/me`;
+    try{
+        const response = await fetch(url, {
+            method:"GET",
+         headers:makeHeaders()   
+        })
+        const json = await response.json();
+        return json;
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+export const makeHeaders = () => {
+    const token = localStorage.getItem("token", token);
+    if (token !== 'undefined' && token !== null){
+        const headersObject = 
+                    {'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`}  
+        
+        return headersObject;
+    }
+        else {const headersObject = {
+            headers: {'Content-Type': 'application/json'}
+        }
+            return headersObject;
+    }
+
+};
