@@ -1,6 +1,4 @@
 
-
-
 // const baseURL = 'https://floating-wave-37737.herokuapp.com/api'
 const baseURL = 'http://fitnesstrac-kr.herokuapp.com/api/'
 
@@ -82,9 +80,7 @@ export const getActivities = async () => {
     }catch (error){
         console.error(error);
     }
-=======
-//const baseURL = 'https://floating-wave-37737.herokuapp.com/api/'
-const baseURL = 'https://fitnesstrac-kr.herokuapp.com/api/';
+}
 
 export const userRoutines = async (username) => {
     const url = `${baseURL}/users/${username}/routines`;
