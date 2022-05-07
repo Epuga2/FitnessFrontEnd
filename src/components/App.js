@@ -10,6 +10,7 @@ import PublicRoutines from './PublicRoutines';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUsername] = useState(null);
 
     useEffect(() => {
         setIsLoggedIn (!!localStorage.getItem("token"))

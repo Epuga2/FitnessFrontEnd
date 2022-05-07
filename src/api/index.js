@@ -1,7 +1,6 @@
 
 // const baseURL = 'https://floating-wave-37737.herokuapp.com/api'
-const baseURL = 'http://fitnesstrac-kr.herokuapp.com/api/'
-
+const baseURL = 'http://fitnesstrac-kr.herokuapp.com/api'
 
 // export const makeHeaders = () => {
 //     let token = localStorage.getItem("token", token);
@@ -33,7 +32,7 @@ export const registerUser = async (user) => {
         })
         const json = await response.json();
         console.log(json)
-        const token = json.data.token;
+        const token = json.token;
         localStorage.setItem("token", token);
         console.log(token)
     }catch(error){
@@ -58,6 +57,7 @@ export const loginUser = async (user) => {
          console.log(json)
          const token = json.token;
          localStorage.setItem("token", token);
+         localStorage.setItem("username", json.user.username);
          return json;
 
     }
@@ -80,7 +80,7 @@ export const getActivities = async () => {
     }catch (error){
         console.error(error);
     }
-}
+};
 
 export const userRoutines = async (username) => {
     const url = `${baseURL}/users/${username}/routines`;
@@ -179,4 +179,3 @@ export const createRoutine = async (newRoutineObj) => {
         console.error(error)
     }
 };
-
