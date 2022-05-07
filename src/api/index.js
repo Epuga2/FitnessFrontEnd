@@ -119,7 +119,10 @@ export const getCurrentUser = async () => {
     try{
         const response = await fetch(url, {
             method:"GET",
-         headers:makeHeaders()   
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }   
         })
         const json = await response.json();
         return json;

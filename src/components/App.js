@@ -6,6 +6,7 @@ import Logout from './Logout'
 import Activities from './Activities'
 import Routines from './Routines'
 import PublicRoutines from './PublicRoutines';
+import UserMe from './UserMe';
 
 
 const App = () => {
@@ -22,7 +23,8 @@ const App = () => {
         {isLoggedIn ? <Logout isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/> :
         <Login isLoggedIn = {isLoggedIn } setIsLoggedIn = {setIsLoggedIn}/>
         }
-        {isLoggedIn? <p>You Are Logged In</p> :<Register isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>}
+        {isLoggedIn? <UserMe /> :<Register isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>}
+      
 
         
         <PublicRoutines /> 
