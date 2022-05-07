@@ -1,12 +1,13 @@
 import React from 'react'
 import Routines from './Routines';
+import PublicRoutines from './PublicRoutines';
 
 const App = () => {
     return(
-        <h1>
-            Hello World
-        </h1>,
-        <div> <Routines /> </div> 
+        <div> 
+            <Routines />
+            <PublicRoutines /> 
+            </div>
     );
 
 };
