@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import Login from './Login'
 import Register from './Register'
 import Logout from './Logout'
 import Activities from './Activities'
 import Routines from './Routines'
+import PublicRoutines from './PublicRoutines';
 
 
 const App = () => {
@@ -22,10 +24,11 @@ const App = () => {
         {isLoggedIn? <p>You Are Logged In</p> :<Register isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>}
 
         
-        
+        <PublicRoutines /> 
         <Activities />
         {/* <Routines /> */}
     </div>
+
     );
 
 };
