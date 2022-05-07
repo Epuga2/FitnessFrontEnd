@@ -16,10 +16,10 @@ const App = () => {
 
     return(
     <div>
-        {isLoggedIn? <Logout /> :
-        <Login />
+        {isLoggedIn ? <Logout isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/> :
+        <Login isLoggedIn = {isLoggedIn } setIsLoggedIn = {setIsLoggedIn}/>
         }
-        {isLoggedIn? <p>You Are Logged In</p> :<Register />}
+        {isLoggedIn? <p>You Are Logged In</p> :<Register isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>}
 
         
         

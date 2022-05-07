@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { loginUser } from '../api'
 
-const Login = () => {
+const Login = (props) => {
+    const { isLoggedIn, setIsLoggedIn } = props;
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
@@ -11,11 +12,11 @@ const Login = () => {
             username: userName,
             password: password
         };
-            
         await loginUser(user);
         console.log(localStorage.getItem('token'));
         setUserName('');
         setPassword('');
+        setIsLoggedIn (!!localStorage.getItem("token"))
     };
     const updateUserName = (event) => {
         setUserName(event.target.value)

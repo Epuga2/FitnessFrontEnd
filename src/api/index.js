@@ -1,7 +1,25 @@
+
+
 // const baseURL = 'https://floating-wave-37737.herokuapp.com/api'
 const baseURL = 'http://fitnesstrac-kr.herokuapp.com/api/'
 
 
+// export const makeHeaders = () => {
+//     let token = localStorage.getItem("token", token);
+//     console.log(token)
+//     if (token !== 'undefined' && token !== null){
+//         const headersObject = 
+//                     {'Content-Type': 'application/json',
+//                     'Authorization': `Bearer ${token}`}  
+        
+//         return headersObject;
+//     }
+//         else {const headersObject = {
+//             headers: {'Content-Type': 'application/json'}
+//         }
+//             return headersObject;
+//     }
+// };
 
 export const registerUser = async (user) => {
 
@@ -31,11 +49,12 @@ export const loginUser = async (user) => {
         const response = await fetch(url,{
             method: "POST",
             headers: {
-                'Content-Type' : 'application/json'
-            },
+                'Content-Type': 'application/json',
+              },
             body: JSON.stringify(user)
         }
          );
+         console.log(response)
          const json = await response.json();
          console.log(json)
          const token = json.token;
@@ -93,21 +112,56 @@ export const getCurrentUser = async () => {
     catch(error){
         console.error(error);
     }
+};
+
+export const createNewActivity = async (activityObj) => {
+    const url = `${baseURL}/activities`;
+    try{
+        const response = await fetch(url, {
+            methos: "POST",
+            body: JSON.stringify(activityObj)
+        })
+        const json = await response.json();
+        return json;
+    }catch(error){
+        console.error(error)
+    }
 }
 
-export const makeHeaders = () => {
-    const token = localStorage.getItem("token", token);
-    if (token !== 'undefined' && token !== null){
-        const headersObject = 
-                    {'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`}  
-        
-        return headersObject;
+export const updateActivity = async (activityId,activityObj) => {
+    const url = `${baseURL}/activities/${activityId}`
+    try{
+        const response = await fetch(url, {
+            method: "PATCH",
+            body: JSON.stringify(activityObj)
+        })
+    }catch(error){
+        console.error(error)
     }
-        else {const headersObject = {
-            headers: {'Content-Type': 'application/json'}
-        }
-            return headersObject;
-    }
-
 };
+
+export const getPubRoutineWithActivity = async (activityId) => {
+    const url = `${baseURL}/activities/${activityId}/routines`;
+    try{
+        const response = await fetch(url, {
+            headers:{
+                'Content-Type' : 'application/json',
+            },
+        })
+    }catch(error){
+        console.error(error)
+    }
+};
+
+export const createRoutine = async (newRoutineObj) => {
+    const url = `${baseURL}/routines`;
+    try{
+        const response = await fetch (url, {
+            method : "POST",
+            body: JSON.stringify(newRoutineObj)
+        })
+    }catch(error){
+        console.error(error)
+    }
+};
+
