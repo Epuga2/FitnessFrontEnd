@@ -9,7 +9,7 @@ const PublicRoutines = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const publicRoutines = await userRoutines(username)
+            const publicRoutines = await userRoutines(localStorage.getItem('username'))
             setPublic(publicRoutines)
         }
         fetchData();

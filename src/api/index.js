@@ -1,24 +1,8 @@
 
 // const baseURL = 'https://floating-wave-37737.herokuapp.com/api'
-const baseURL = 'http://fitnesstrac-kr.herokuapp.com/api/'
+const baseURL = 'https://fitnesstrac-kr.herokuapp.com/api/'
 
 
-// export const makeHeaders = () => {
-//     let token = localStorage.getItem("token", token);
-//     console.log(token)
-//     if (token !== 'undefined' && token !== null){
-//         const headersObject = 
-//                     {'Content-Type': 'application/json',
-//                     'Authorization': `Bearer ${token}`}  
-        
-//         return headersObject;
-//     }
-//         else {const headersObject = {
-//             headers: {'Content-Type': 'application/json'}
-//         }
-//             return headersObject;
-//     }
-// };
 
 export const registerUser = async (user) => {
 
@@ -33,7 +17,7 @@ export const registerUser = async (user) => {
         })
         const json = await response.json();
         console.log(json)
-        const token = json.data.token;
+        const token = json.token;
         localStorage.setItem("token", token);
         console.log(token)
     }catch(error){
@@ -48,16 +32,15 @@ export const loginUser = async (user) => {
         const response = await fetch(url,{
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-              },
+                'Content-Type' : 'application/json',
+            },
             body: JSON.stringify(user)
         }
          );
-         console.log(response)
          const json = await response.json();
-         console.log(json)
          const token = json.token;
          localStorage.setItem("token", token);
+         localStorage.setItem("username", json.user.username);
          return json;
 
     }
@@ -119,7 +102,10 @@ export const getCurrentUser = async () => {
     try{
         const response = await fetch(url, {
             method:"GET",
-         headers:makeHeaders()   
+         headers:  {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }   
         })
         const json = await response.json();
         return json;
@@ -133,7 +119,7 @@ export const createNewActivity = async (activityObj) => {
     const url = `${baseURL}/activities`;
     try{
         const response = await fetch(url, {
-            methos: "POST",
+            method: "POST",
             body: JSON.stringify(activityObj)
         })
         const json = await response.json();
@@ -143,13 +129,15 @@ export const createNewActivity = async (activityObj) => {
     }
 }
 
-export const updateActivity = async (activityId,activityObj) => {
+export const updateActivity = async (activityId, activityObj) => {
     const url = `${baseURL}/activities/${activityId}`
     try{
         const response = await fetch(url, {
             method: "PATCH",
             body: JSON.stringify(activityObj)
         })
+        const json = await response.json();
+        return json;
     }catch(error){
         console.error(error)
     }
@@ -163,6 +151,8 @@ export const getPubRoutineWithActivity = async (activityId) => {
                 'Content-Type' : 'application/json',
             },
         })
+        const json = await response.json();
+        return json;
     }catch(error){
         console.error(error)
     }
@@ -175,7 +165,85 @@ export const createRoutine = async (newRoutineObj) => {
             method : "POST",
             body: JSON.stringify(newRoutineObj)
         })
+        const json = await response.json();
+        return json;
     }catch(error){
         console.error(error)
     }
 };
+
+export const updateRoutine = async (routineId,routineObj) => {
+    const url = `${baseURL}/routines/${routineId}`
+    try{
+        const response = await fetch(url, {
+            method: "PATCH",
+            body: JSON.stringify(routineObj)
+        })
+        const json = response.json();
+        return json        
+    }catch(error){
+        console.error(error)
+    }
+    
+};
+
+export const deleteRoutine = async (routineId) => {
+    const url = `${baseURL}/routines/${routineId}`
+    try{
+        const response = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }  
+        
+        })
+
+    }catch(error){
+        console.error(error)
+    }
+}
+export const attachActivityToRoutine = async (routineId,activityId, activityObj) => {
+    const url = `${baseURL}/routines/${routineId}/activities`;
+    try{
+        const response = await fetch (url, {
+            method: "POST",
+            body : JSON.stringify(activityObj)
+        })
+        const json = response.json();
+        return json;
+    }catch(error){
+        console.error(error)
+    }
+}
+//may need tweaks due to routineActivityObj count and duration being optional
+ export const updateRoutineActDetails = async (routineActivityId, routineActivityObj = {count : null, duration : null} ) => {
+     const url = `${baseURL}/routine_activities/${routineActivityId}`
+     try{
+         const response = await fetch(url, {
+             method:"PATCH",
+             body : JSON.stringify(routineActivityObj)
+         })
+         const json = response.json();
+         return json;
+     } catch(error){
+         console.error(error)
+     }
+ }
+
+export const removeActivityFromRoutine = async (routineActivityId) => {
+    const url = `${baseURL}/routine_activities/${routineActivityId}`
+    try {
+        const response = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }  
+        })
+        const json = response.json();
+        return json;
+    }catch(error){
+        console.error(error)
+    }
+}
