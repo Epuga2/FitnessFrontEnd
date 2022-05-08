@@ -7,6 +7,7 @@ import Activities from './Activities'
 import Routines from './Routines'
 import PublicRoutines from './PublicRoutines';
 import UserMe from './UserMe';
+import NewActivity from './NewActivity';
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
         
         <PublicRoutines /> 
         <Activities />
+        <NewActivity />
         {/* <Routines /> */}
     </div>
 
