@@ -3,22 +3,22 @@
 const baseURL = 'http://fitnesstrac-kr.herokuapp.com/api/'
 
 
-// export const makeHeaders = () => {
-//     let token = localStorage.getItem("token", token);
-//     console.log(token)
-//     if (token !== 'undefined' && token !== null){
-//         const headersObject = 
-//                     {'Content-Type': 'application/json',
-//                     'Authorization': `Bearer ${token}`}  
+export const makeHeaders = () => {
+    let token = localStorage.getItem("token");
+    console.log(token)
+    if (token !== 'undefined' && token !== null){
+        const headersObject = 
+                    {'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`}  
         
-//         return headersObject;
-//     }
-//         else {const headersObject = {
-//             headers: {'Content-Type': 'application/json'}
-//         }
-//             return headersObject;
-//     }
-// };
+        return headersObject;
+    }
+        else {const headersObject = {
+            headers: {'Content-Type': 'application/json'}
+        }
+            return headersObject;
+    }
+};
 
 export const registerUser = async (user) => {
 
@@ -33,7 +33,7 @@ export const registerUser = async (user) => {
         })
         const json = await response.json();
         console.log(json)
-        const token = json.data.token;
+        const token = json.token;
         localStorage.setItem("token", token);
         console.log(token)
     }catch(error){
@@ -47,9 +47,7 @@ export const loginUser = async (user) => {
     try{
         const response = await fetch(url,{
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-              },
+            headers: makeHeaders(),
             body: JSON.stringify(user)
         }
          );
@@ -119,7 +117,10 @@ export const getCurrentUser = async () => {
     try{
         const response = await fetch(url, {
             method:"GET",
-         headers:makeHeaders()   
+         headers:  {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }   
         })
         const json = await response.json();
         return json;
@@ -133,7 +134,7 @@ export const createNewActivity = async (activityObj) => {
     const url = `${baseURL}/activities`;
     try{
         const response = await fetch(url, {
-            methos: "POST",
+            method: "POST",
             body: JSON.stringify(activityObj)
         })
         const json = await response.json();
