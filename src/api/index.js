@@ -151,6 +151,8 @@ export const updateActivity = async (activityId,activityObj) => {
             method: "PATCH",
             body: JSON.stringify(activityObj)
         })
+        const json = await response.json();
+        return json;
     }catch(error){
         console.error(error)
     }
@@ -160,10 +162,10 @@ export const getPubRoutineWithActivity = async (activityId) => {
     const url = `${baseURL}/activities/${activityId}/routines`;
     try{
         const response = await fetch(url, {
-            headers:{
-                'Content-Type' : 'application/json',
-            },
+            headers:makeHeaders(),
         })
+        const json = await response.json();
+        return json;
     }catch(error){
         console.error(error)
     }
@@ -176,7 +178,79 @@ export const createRoutine = async (newRoutineObj) => {
             method : "POST",
             body: JSON.stringify(newRoutineObj)
         })
+        const json = await response.json();
+        return json;
     }catch(error){
         console.error(error)
     }
 };
+
+export const updateRoutine = async (routineId,routineObj) => {
+    const url = `${baseURL}/routines/${routineId}`
+    try{
+        const response = await fetch(url, {
+            method: "PATCH",
+            body: JSON.stringify(routineObj)
+        })
+        const json = response.json();
+        return json        
+    }catch(error){
+        console.error(error)
+    }
+    
+};
+
+export const deleteRoutine = async (routineId) => {
+    const url = `${baseURL}/routines/${routineId}`
+    try{
+        const response = await fetch(url, {
+            method: "DELETE",
+            headers: makeHeaders()
+        
+        })
+
+    }catch(error){
+        console.error(error)
+    }
+}
+export const attachActivityToRoutine = async (routineId,activityId, activityObj) => {
+    const url = `${baseURL}/routines/${routineId}/activities`;
+    try{
+        const response = await fetch (url, {
+            method: "POST",
+            body : JSON.stringify(activityObj)
+        })
+        const json = response.json();
+        return json;
+    }catch(error){
+        console.error(error)
+    }
+}
+//may need tweaks due to routineActivityObj count and duration being optional
+ export const updateRoutineActDetails = async (routineActivityId, routineActivityObj = {count : null, duration : null} ) => {
+     const url = `${baseURL}/routine_activities/${routineActivityId}`
+     try{
+         const response = await fetch(url, {
+             method:"PATCH",
+             body : JSON.stringify(routineActivityObj)
+         })
+         const json = response.json();
+         return json;
+     } catch(error){
+         console.error(error)
+     }
+ }
+
+export const removeActivityFromRoutine = async (routineActivityId) => {
+    const url = `${baseURL}/routine_activities/${routineActivityId}`
+    try {
+        const response = await fetch(url, {
+            method: "DELETE",
+            headers: makeHeaders()
+        })
+        const json = response.json();
+        return json;
+    }catch(error){
+        console.error(error)
+    }
+}
