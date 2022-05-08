@@ -1,24 +1,8 @@
 
 // const baseURL = 'https://floating-wave-37737.herokuapp.com/api'
-const baseURL = 'http://fitnesstrac-kr.herokuapp.com/api/'
+const baseURL = 'https://fitnesstrac-kr.herokuapp.com/api/'
 
 
-export const makeHeaders = () => {
-    let token = localStorage.getItem("token");
-    console.log(token)
-    if (token !== 'undefined' && token !== null){
-        const headersObject = 
-                    {'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`}  
-        
-        return headersObject;
-    }
-        else {const headersObject = {
-            headers: {'Content-Type': 'application/json'}
-        }
-            return headersObject;
-    }
-};
 
 export const registerUser = async (user) => {
 
@@ -47,15 +31,16 @@ export const loginUser = async (user) => {
     try{
         const response = await fetch(url,{
             method: "POST",
-            headers: makeHeaders(),
+            headers: {
+                'Content-Type' : 'application/json',
+            },
             body: JSON.stringify(user)
         }
          );
-         console.log(response)
          const json = await response.json();
-         console.log(json)
          const token = json.token;
          localStorage.setItem("token", token);
+         localStorage.setItem("username", json.user.username);
          return json;
 
     }
@@ -144,7 +129,7 @@ export const createNewActivity = async (activityObj) => {
     }
 }
 
-export const updateActivity = async (activityId,activityObj) => {
+export const updateActivity = async (activityId, activityObj) => {
     const url = `${baseURL}/activities/${activityId}`
     try{
         const response = await fetch(url, {
@@ -162,7 +147,9 @@ export const getPubRoutineWithActivity = async (activityId) => {
     const url = `${baseURL}/activities/${activityId}/routines`;
     try{
         const response = await fetch(url, {
-            headers:makeHeaders(),
+            headers:{
+                'Content-Type' : 'application/json',
+            },
         })
         const json = await response.json();
         return json;
@@ -205,7 +192,10 @@ export const deleteRoutine = async (routineId) => {
     try{
         const response = await fetch(url, {
             method: "DELETE",
-            headers: makeHeaders()
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }  
         
         })
 
@@ -246,7 +236,10 @@ export const removeActivityFromRoutine = async (routineActivityId) => {
     try {
         const response = await fetch(url, {
             method: "DELETE",
-            headers: makeHeaders()
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }  
         })
         const json = response.json();
         return json;

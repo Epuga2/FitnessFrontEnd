@@ -6,34 +6,31 @@ import Register from './Register'
 import Logout from './Logout'
 import Activities from './Activities'
 import Routines from './Routines'
-import PublicRoutines from './PublicRoutines';
-import userMe from './UserMe';
+import PublicRoutines from './PublicRoutines'
+import UserMe from './UserMe'
 
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUsername] = useState(null);
 
     useEffect(() => {
         setIsLoggedIn (!!localStorage.getItem("token"))
     }, []);
-    console.log(isLoggedIn)
 
     return(
         <Router>
-            <Switch>
     <div>
-
+        <Route path ='/'>        
         {isLoggedIn ? <Logout isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/> :
         <Login isLoggedIn = {isLoggedIn } setIsLoggedIn = {setIsLoggedIn}/>
         }
-
         {isLoggedIn ?<p></p> :<Link to = '/Register'>Register Here!</Link>}
-
+        </Route >
         <Route path = '/Register'>
-        {isLoggedIn? <p>You Are Logged In</p> :<Register isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>}
+        {isLoggedIn? <UserMe /> :<Register isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>}
         </Route>
         
-        <PublicRoutines /> 
         <Route path = '/Activities'>
             <Activities />            
         </Route>
@@ -41,10 +38,14 @@ const App = () => {
         <Route path = '/Routines'>
             <Routines />
          </Route>
+
+        <Route path = '/publicroutines'>
+            <PublicRoutines />
+        </Route>
+
         
 
     </div>
-    </Switch>
     </Router>
     );
 
