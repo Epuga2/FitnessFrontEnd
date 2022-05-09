@@ -120,6 +120,10 @@ export const createNewActivity = async (activityObj) => {
     try{
         const response = await fetch(url, {
             method: "POST",
+            headers:  {
+               'Content-Type': 'application/json',
+               'Authorization': `Bearer ${localStorage.getItem('token')}`
+           },
             body: JSON.stringify(activityObj)
         })
         const json = await response.json();
@@ -134,6 +138,10 @@ export const updateActivity = async (activityId, activityObj) => {
     try{
         const response = await fetch(url, {
             method: "PATCH",
+            headers:  {
+               'Content-Type': 'application/json',
+               'Authorization': `Bearer ${localStorage.getItem('token')}`
+           },  
             body: JSON.stringify(activityObj)
         })
         const json = await response.json();

@@ -3,8 +3,8 @@ import { updateActivity } from '../api';
 
 const UpdateActivities = (props) => {
     const {id, name, description} = props;
-    const [activityName, setActivityName] = useState(name);
-    const [activityDescription, setActivityDescription] = useState(description);
+    const [activityName, setActivityName] = useState('');
+    const [activityDescription, setActivityDescription] = useState('');
     const [buttonOn, setButtonOn] =  useState(false);
 
 
@@ -20,11 +20,11 @@ const UpdateActivities = (props) => {
         setActivityName('');
         setActivityDescription('');
     }
-    const updateActivityName = () =>{
+    const updateActivityName = (event) =>{
         setActivityName(event.target.value)
     }
 
-    const updateActivityDescription = () => {
+    const updateActivityDescription = (event) => {
         setActivityDescription(event.target.value)
     }
     return(
